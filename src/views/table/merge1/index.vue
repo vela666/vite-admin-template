@@ -82,7 +82,7 @@ import { isString, isBoolean } from '@/utils/validate'
 import { data } from './data.json'
 
 export default defineComponent({
-  name: 'AdTaskDetails',
+  name: 'Merge1',
   components: {
     DetailsTable,
   },
@@ -419,6 +419,9 @@ export default defineComponent({
       batchCancelHandler,
       updAuditStatusHandler,
     }
+  },
+  activated() {
+    console.log('Merge1')
   },
 })
 </script>
