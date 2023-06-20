@@ -1,0 +1,109 @@
+body {
+  box-sizing: border-box;
+  min-width: 960px;
+  height: 100%;
+  font: 12px/1.5 Microsoft YaHei, Microsoft YaHei-Regular, sans-serif;
+  color: $color-616161;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  //overflow-x: hidden;
+  overflow-anchor: none;
+  overscroll-behavior-y: none;
+}
+
+#app {
+  height: 100%;
+}
+
+textarea {
+  resize: none;
+  overflow: auto;
+}
+
+
+// 重置所有滚动条
+*, div {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: #f8f8f9;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #dcdee2;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+p,
+form,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+main {
+  display: block;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
+img {
+  vertical-align: top;
+  border: none;
+}
+input,
+button,
+select,
+textarea {
+  vertical-align: middle;
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+i {
+  font-style: normal;
+}
