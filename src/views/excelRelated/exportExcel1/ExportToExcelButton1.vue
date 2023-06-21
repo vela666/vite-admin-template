@@ -10,7 +10,7 @@
 <script setup>
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import { exportToExcel } from '@/vendor/Export2Excel'
+import { exportToExcel } from '@/vendor/handleExcel'
 
 const props = defineProps({
   type: {
