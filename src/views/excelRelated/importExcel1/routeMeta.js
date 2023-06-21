@@ -1,5 +1,5 @@
 export default {
   title: '导入Excel',
-  icon: 'table',
+  icon: 'importExcel1',
   // sort: 5,
 }
