@@ -1,3 +1,36 @@
-// 解决按需引入 后又手动导入 无样式  该方式使用时 import { ElMessage } from 'element-plus'
-@use 'element-plus/theme-chalk/src/message.scss';
-@use 'element-plus/theme-chalk/src/message-box.scss';
+// 自定表格样式
+.n-table-custom-css {
+  width: 100%;
+  &.#{$customNameSpace}-table {
+    thead {
+      > tr {
+        > th {
+          //background-color:  #f0f2f5 !important;
+        }
+      }
+    }
+  }
+  // 隐藏除了第一行的右侧边框
+  &.#{$customNameSpace}-table--border{
+    thead {
+      > tr {
+        > th {
+          //border-right: 1px solid  !important;
+        }
+      }
+    }
+    .#{$customNameSpace}-table__cell {
+      //border-right: none ;
+    }
+  }
+}
+.#{$customNameSpace}-table {
+  // 表格某行列没有数据的情况下，显示--
+  tbody td .cell:empty::after {
+    content: '--';
+  }
+  //
+  .#{$customNameSpace}-popper {
+    max-width: 350px;
+  }
+}

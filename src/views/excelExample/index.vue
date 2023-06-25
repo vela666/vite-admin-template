@@ -1,12 +1,12 @@
 <template>
-  <div>index</div>
+  <div>Index</div>
 </template>
 
 <script setup>
 import { computed, watch, reactive, ref } from 'vue'
 
 defineOptions({
-  name: 'index',
+  name: 'ExcelExample',
 })
 </script>
 

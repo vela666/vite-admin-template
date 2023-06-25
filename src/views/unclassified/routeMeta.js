@@ -1,4 +1,5 @@
 export default {
-  title: '合并3',
+  title: '未分类',
   icon: 'table',
+  sort: 4,
 }

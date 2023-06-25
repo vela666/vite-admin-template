@@ -15,3 +15,7 @@ getMenus和generateRoutes里使用generateRoute2方法
 在src/store/modules/permission.js下
 getMenus和generateRoutes里使用generateRoute3方法
 ```
+```
+解决使用unplugin-vue-components自动引入组件时
+手动import { ElMessage, ElMessageBox } from 'element-plus' 样式不会被引入问题
+```
