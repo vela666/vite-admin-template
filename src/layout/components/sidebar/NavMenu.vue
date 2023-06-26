@@ -43,7 +43,7 @@ const isCollapse = computed(() => {
 })
 
 defineOptions({
-  name: 'Nmenu',
+  name: 'NavMenu',
 })
 </script>
 <style lang="scss">

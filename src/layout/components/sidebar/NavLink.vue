@@ -28,6 +28,7 @@ const linkProps = (to) => {
       href: to,
       target: '_blank',
       rel: 'noopener',
+      // rel: 'opener',
     }
   }
   return {
@@ -36,6 +37,6 @@ const linkProps = (to) => {
 }
 
 defineOptions({
-  name: 'Nlink',
+  name: 'NavLink',
 })
 </script>

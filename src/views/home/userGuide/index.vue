@@ -10,6 +10,7 @@
 
 <script setup>
 import { computed, watch, reactive, ref, onActivated } from 'vue'
+import { isExternal } from '@/utils/validate'
 const flag = ref(true)
 onActivated(() => {
   console.log('UserGuide')

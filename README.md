@@ -16,6 +16,10 @@ getMenus和generateRoutes里使用generateRoute2方法
 getMenus和generateRoutes里使用generateRoute3方法
 ```
 ```
-解决使用unplugin-vue-components自动引入组件时
-手动import { ElMessage, ElMessageBox } from 'element-plus' 样式不会被引入问题
+解决使用unplugin-vue-components自动引入组件时  
+// 解决按需引入后又手动导入 无样式  
+手动import { ElMessage, ElMessageBox } from 'element-plus' 样式不会被引入问题 
+// 在scss文件中写入以下代码
+@use 'element-plus/theme-chalk/src/message.scss';
+@use 'element-plus/theme-chalk/src/message-box.scss';
 ```

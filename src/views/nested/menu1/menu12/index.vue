@@ -1,9 +1,17 @@
 <template>
-  <div style="padding: 30px">来来来</div>
+  <div>Index</div>
 </template>
 
 <script setup>
+import { computed, watch, reactive, ref, onActivated } from 'vue'
+
 defineOptions({
-  name: 'Menu1-2',
+  name: 'Menu12',
+})
+
+onActivated(() => {
+  console.log('Menu12')
 })
 </script>
+
+<style scoped lang="scss"></style>

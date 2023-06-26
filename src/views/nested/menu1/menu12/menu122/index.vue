@@ -17,6 +17,6 @@ onActivated(() => {
   console.log('menu1-2-2')
 })
 defineOptions({
-  name: 'Menu1-2-2',
+  name: 'Menu122',
 })
 </script>

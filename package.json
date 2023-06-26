@@ -51,6 +51,7 @@
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "@vue/eslint-config-prettier": "^7.1.0",
     "autoprefixer": "^10.4.14",
+    "consola": "^3.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.43.0",
     "eslint-plugin-vue": "^9.15.1",
@@ -64,6 +65,7 @@
     "vite": "^4.3.9",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-mock": "^3.0.0",
+    "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-svg-icons": "^2.0.1"
   },
   "browserslist": [

@@ -2,11 +2,11 @@
   <section class="app-main">
     <div>
       <router-view #default="{ Component }">
-        <transition appear name="fade-transform" mode="out-in">
+        <Transition appear name="fade-transform" mode="out-in">
           <keep-alive :include="tagsViewStore.cachedViews" :max="6">
             <component :is="Component" :key="$route.path" />
           </keep-alive>
-        </transition>
+        </Transition>
       </router-view>
     </div>
   </section>

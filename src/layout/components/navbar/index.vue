@@ -4,7 +4,7 @@
       v-if="settingsStore.layoutMod === 'horizontal'"
       class="horizontal-sidebar-container">
       <Logo />
-      <MenuBar />
+      <NavMenu />
     </div>
 
     <div class="flex-center" v-if="settingsStore.layoutMod === 'vertical'">
@@ -44,20 +44,14 @@
 
         <template #dropdown>
           <el-dropdown-menu>
-            <router-link to="/user/index">
-              <el-dropdown-item>个人中心</el-dropdown-item>
-            </router-link>
             <router-link to="/">
               <el-dropdown-item>首页</el-dropdown-item>
             </router-link>
-            <a target="_blank" href="https://github.com/mvpyb">
+            <a target="_blank" href="https://github.com/vela666">
               <el-dropdown-item>Github</el-dropdown-item>
             </a>
-            <a target="_blank" href="https://gitee.com/simmon_page">
-              <el-dropdown-item>码云</el-dropdown-item>
-            </a>
             <el-dropdown-item divided @click="logout">
-              <span style="display: block">退出</span>
+              <span>退出</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -86,7 +80,7 @@ import SizeSelect from './components/SizeSelect'
 import LangSelect from './components/LangSelect'
 
 import Logo from '@/layout/components/sidebar/Logo'
-import MenuBar from '../sidebar/Menu'
+import NavMenu from '../sidebar/NavMenu'
 
 const router = useRouter()
 const appStore = useAppStore()

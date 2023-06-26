@@ -2,7 +2,7 @@
   <div>
     <Logo :class="settingsStore.layoutMod + '-logo'" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <Menu />
+      <NavMenu />
     </el-scrollbar>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script setup>
 import useSettingsStore from '@/store/modules/settings'
 import Logo from './Logo'
-import Menu from './Menu'
+import NavMenu from './NavMenu'
 
 const settingsStore = useSettingsStore()
 

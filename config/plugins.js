@@ -10,6 +10,10 @@ import eslintPlugin from 'vite-plugin-eslint'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import {
+  createStyleImportPlugin,
+  VxeTableResolve,
+} from 'vite-plugin-style-import'
 
 function toPascalCase(str) {
   const words = str.split('-')
@@ -84,6 +88,26 @@ export function composePlugins(command, VITE_LEGACY) {
           },
         },*/
       ],
+    }),
+
+    //  需安装 pnpm i  vite-plugin-style-import consola -D
+    createStyleImportPlugin({
+      resolves: [VxeTableResolve()],
+      // resolves: [ElementPlusResolve()],
+      /*libs: [
+        // 如果没有你需要的resolve，可以在lib内直接写，也可以给我们提供PR
+        {
+          libraryName: 'element-plus',
+          ensureStyleFile: true,
+          esModule: true,
+          resolveStyle: (name) => {
+            return `element-plus/theme-chalk/src/${name.replace(
+              /^el-/,
+              '',
+            )}.scss`
+          },
+        },
+      ],*/
     }),
     {
       ...eslintPlugin({

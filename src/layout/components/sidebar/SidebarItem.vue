@@ -6,7 +6,7 @@
         (!onlyOneChild.children?.length || onlyOneChild.noShowingChildren) &&
         !item.meta?.alwaysShow
       ">
-      <AppLink v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+      <NavLink v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
           :class="{
@@ -22,14 +22,11 @@
             </span>
           </template>
         </el-menu-item>
-      </AppLink>
+      </NavLink>
     </template>
     <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)">
       <template #title>
-        <SvgIcon
-          class="mr-15 test"
-          v-if="item.meta.icon"
-          :name="item.meta.icon" />
+        <SvgIcon class="mr-15" v-if="item.meta.icon" :name="item.meta.icon" />
         <span>
           {{ item.meta.title }}
         </span>
@@ -50,7 +47,7 @@
 import { ref } from 'vue'
 import path from 'path-browserify'
 import { isExternal } from '@/utils/validate'
-import AppLink from './Link'
+import NavLink from './NavLink'
 
 const props = defineProps({
   item: {

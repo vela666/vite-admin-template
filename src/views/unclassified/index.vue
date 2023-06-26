@@ -1,4 +1,4 @@
-<template></template>
+<template>123</template>
 
 <script setup name="index"></script>
 

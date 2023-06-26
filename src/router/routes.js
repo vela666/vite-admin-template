@@ -213,7 +213,7 @@ export const asyncRoutes = [
     meta: { title: '外链', icon: 'outside' },
     children: [
       {
-        path: 'https://github.com/mvpyb/vite-element-admin',
+        path: 'https://github.com/vela666/vite-admin-template',
         name: 'Github',
         meta: { title: 'github' },
       },
