@@ -23,3 +23,8 @@ getMenus和generateRoutes里使用generateRoute3方法
 @use 'element-plus/theme-chalk/src/message.scss';
 @use 'element-plus/theme-chalk/src/message-box.scss';
 ```
+#### vite自带快捷键
+``` 
+按 c 清除控制台
+按 u 控制台显示服务器 url
+```
