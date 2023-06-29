@@ -4,10 +4,12 @@
 @use 'element-plus/theme-chalk/src/message.scss';
 @use 'element-plus/theme-chalk/src/message-box.scss';
 
-
 // 让下面的scss文件可以使用变量
 @use "./config/config.scss" as * ;
 @use "./config/variables.scss" as * ;
+
+@import 'vxe-table/styles/variable.scss';
+@import 'vxe-table/styles/cssvar.scss';
 @import './mixin.scss';
 @import './transition.scss';
 @import './sidebar.scss';

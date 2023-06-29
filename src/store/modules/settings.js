@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import variables from '@/styles/element-variables.scss?inline'
 import defaultSettings from '@/settings'
 
 const { showSettings, tagsView, fixedHeader, sidebarLogo, layoutMod } =
@@ -22,7 +21,6 @@ const useSettingsStore = defineStore({
     )
 
     return {
-      theme: variables.theme,
       showSettings,
       tagsView: localTagsView,
       fixedHeader: localFixedHeader,

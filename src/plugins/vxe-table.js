@@ -1,5 +1,6 @@
 import XEUtils from 'xe-utils'
-import 'vxe-table/lib/style.css'
+// import 'vxe-table/lib/style.css'
+// 部分样式在 src/styles/index.scss
 import {
   // 全局对象
   VXETable,
@@ -17,7 +18,7 @@ import {
   Column,
   // Colgroup,
   Grid,
-  Tooltip,
+  // Tooltip,
   Toolbar,
   // Pager,
   // Form,
@@ -43,11 +44,13 @@ import {
   Table,
 } from 'vxe-table'
 import zhCN from 'vxe-table/es/locale/lang/zh-CN'
-// import 'vxe-table/styles/cssvar.scss'
 
 // 按需加载的方式默认是不带国际化的，自定义国际化需要自行解析占位符 '{0}'，例如：
 VXETable.setup({
-  i18n: (key, args) => XEUtils.toFormatString(XEUtils.get(zhCN, key), args),
+  // i18n: (key, args) => XEUtils.toFormatString(XEUtils.get(zhCN, key), args),
+  i18n: (key, args) => {
+    return XEUtils.toFormatString(XEUtils.get(zhCN, key), args)
+  },
 })
 
 export default function useTable(app) {
@@ -65,7 +68,7 @@ export default function useTable(app) {
     .use(Column)
     // .use(Colgroup)
     .use(Grid)
-    .use(Tooltip)
+    // .use(Tooltip)
     .use(Toolbar)
     // .use(Pager)
     // .use(Form)
