@@ -1,3 +1,5 @@
+@import "reset.css";
+
 body {
   box-sizing: border-box;
   min-width: 960px;
@@ -45,65 +47,6 @@ textarea {
   }
 }
 
-
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-p,
-form,
-figure,
-dl,
-dd {
-  margin: 0;
-}
-*:after,
-*:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-main {
-  display: block;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 100%;
-  font-weight: normal;
-}
 a {
   text-decoration: none;
-  color: #333;
-}
-img {
-  vertical-align: top;
-  border: none;
-}
-input,
-button,
-select,
-textarea {
-  vertical-align: middle;
-  outline: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-}
-
-i {
-  font-style: normal;
 }
