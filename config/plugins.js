@@ -67,9 +67,15 @@ export function composePlugins(command, VITE_LEGACY) {
       vueTemplate: true,
     }),
     Components({
-      // 默认自动导入src/components文件夹下的组件
+      // 自动导入src/components文件夹下的组件
       // dirs: ['src/components'],
-
+      //全局模式匹配要检测为组件的文件名。
+      //指定后，“dirs”和“extensions”选项将被忽略。
+      //  * 只匹配一级子目录，而 ** 匹配任意深度的子目录。
+      // globs: ['src/components/**/*.vue'],
+      globs: ['src/components/*/index.vue'],
+      // 组件的有效文件扩展名
+      extensions: ['vue'],
       // 自定义指令配合下面的自定义解析器使用
       // directives: true,
       resolvers: [

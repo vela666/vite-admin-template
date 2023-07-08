@@ -11,7 +11,7 @@
     <template #header v-if="Object.keys($slots).includes('title')">
       <slot name="title"></slot>
     </template>
-    <div class="drawer-t" v-show="tabs.length">
+    <div class="drawer-t" v-if="tabs.length">
       <template v-for="item of tabs" :key="item.is">
         <el-button
           :class="{
