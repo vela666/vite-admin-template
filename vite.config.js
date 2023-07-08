@@ -15,7 +15,6 @@ fs.readdirSync(cssPath).map((dirname) => {
     scssResources.push(`@use "${cssPath}/${dirname}" as *;`)
   }
 })
-
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   // 设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
@@ -25,7 +24,7 @@ export default defineConfig(({ command, mode }) => {
     '',
   )
   return {
-    base: './',
+    // base: './',
     resolve: {
       alias: {
         '@': resolve('src'),
@@ -36,7 +35,16 @@ export default defineConfig(({ command, mode }) => {
     plugins: composePlugins(command, VITE_LEGACY),
     // https://cn.vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
     optimizeDeps: {
-      include: ['vue', 'vue-router', 'pinia'],
+      // exclude: ['.pnpm'],
+      include: [
+        '@vueuse/core',
+        'vue',
+        'vue-router',
+        'pinia',
+        'lodash-es',
+        'element-plus',
+        // 'vuedraggable',
+      ],
     },
     css: {
       preprocessorOptions: {
@@ -88,7 +96,9 @@ export default defineConfig(({ command, mode }) => {
       sourcemap: false,
       brotliSize: false,
       chunkSizeWarningLimit: 2500,
-
+      emptyOutDir: true,
+      // 启用/禁用 gzip 压缩大小报告
+      reportCompressedSize: false,
       // minify: 'terser',
       // terserOptions: {
       //   compress: {
@@ -99,7 +109,10 @@ export default defineConfig(({ command, mode }) => {
 
       rollupOptions: {
         output: {
-          manualChunks(id) {
+          chunkFileNames: 'js/[name]-[hash].js', // 引入文件名的名称
+          entryFileNames: 'js/[name]-[hash].js', // 包的入口文件名称
+          assetFileNames: '[ext]/[name]-[hash].[ext]', // 资源文件像 字体，图片等
+          /*manualChunks(id) {
             if (id.includes('node_modules')) {
               return id
                 .toString()
@@ -107,15 +120,7 @@ export default defineConfig(({ command, mode }) => {
                 .split('/')[0]
                 .toString()
             }
-          },
-          chunkFileNames: (chunkInfo) => {
-            const facadeModuleId = chunkInfo.facadeModuleId
-              ? chunkInfo.facadeModuleId.split('/')
-              : []
-            const fileName =
-              facadeModuleId[facadeModuleId.length - 2] || '[name]'
-            return `js/${fileName}/[name].[hash].js`
-          },
+          },*/
         },
       },
     },

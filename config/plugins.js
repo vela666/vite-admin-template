@@ -4,8 +4,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import legacy from '@vitejs/plugin-legacy'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import { viteMockServe } from 'vite-plugin-mock' // https://github.com/anncwb/vite-plugin-mock/blob/HEAD/README.zh_CN.md
-
+// https://www.npmjs.com/package/vite-plugin-mock/v/2.9.8?activeTab=readme
+import { viteMockServe } from 'vite-plugin-mock'
 import eslintPlugin from 'vite-plugin-eslint'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -14,6 +14,8 @@ import {
   createStyleImportPlugin,
   VxeTableResolve,
 } from 'vite-plugin-style-import'
+
+import { chunkSplitPlugin } from 'vite-plugin-chunk-split'
 
 function toPascalCase(str) {
   const words = str.split('-')
@@ -89,7 +91,7 @@ export function composePlugins(command, VITE_LEGACY) {
         },*/
       ],
     }),
-
+    chunkSplitPlugin(),
     //  需安装 pnpm i  vite-plugin-style-import consola -D
     createStyleImportPlugin({
       resolves: [VxeTableResolve()],
@@ -118,31 +120,30 @@ export function composePlugins(command, VITE_LEGACY) {
               include: ['src/!**!/!*.js', 'src/!**!/!*.vue', 'src/!*.js', 'src/!*.vue']
             }),*/
     // https://www.npmjs.com/package/@vitejs/plugin-legacy
-    VITE_LEGACY
-      ? legacy({
-          targets: ['ie >= 11'],
-          additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-          // renderLegacyChunks: true,
-          // polyfills: [
-          //   'es.symbol',
-          //   'es.array.filter',
-          //   'es.promise',
-          //   'es.promise.finally',
-          //   'es/map',
-          //   'es/set',
-          //   'es.array.for-each',
-          //   'es.object.define-properties',
-          //   'es.object.define-property',
-          //   'es.object.get-own-property-descriptor',
-          //   'es.object.get-own-property-descriptors',
-          //   'es.object.keys',
-          //   'es.object.to-string',
-          //   'web.dom-collections.for-each',
-          //   'esnext.global-this',
-          //   'esnext.string.match-all'
-          // ]
-        })
-      : null,
+    VITE_LEGACY === 'true' &&
+      legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+        // renderLegacyChunks: true,
+        // polyfills: [
+        //   'es.symbol',
+        //   'es.array.filter',
+        //   'es.promise',
+        //   'es.promise.finally',
+        //   'es/map',
+        //   'es/set',
+        //   'es.array.for-each',
+        //   'es.object.define-properties',
+        //   'es.object.define-property',
+        //   'es.object.get-own-property-descriptor',
+        //   'es.object.get-own-property-descriptors',
+        //   'es.object.keys',
+        //   'es.object.to-string',
+        //   'web.dom-collections.for-each',
+        //   'esnext.global-this',
+        //   'esnext.string.match-all'
+        // ]
+      }),
     // https://www.npmjs.com/package/rollup-plugin-visualizer
     visualizer({
       open: true,

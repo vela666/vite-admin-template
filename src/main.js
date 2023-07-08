@@ -18,7 +18,6 @@ import { setupElementIcons } from '@/plugins/elementIcons'
 // vxe表格
 import useVxeTable from '@/plugins/vxe-table'
 // https://lottiefiles.com/web-player?lottie_url=https%3A%2F%2Fassets6.lottiefiles.com%2Fpackages%2Flf20_Kr2vAt3caT.json
-
 const app = createApp(App)
 
 const initApp = async () => {
