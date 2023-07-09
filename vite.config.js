@@ -18,11 +18,12 @@ fs.readdirSync(cssPath).map((dirname) => {
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   // 设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
-  const { VITE_APP_BASE_API, VITE_APP_BASE_API_REAL, VITE_LEGACY } = loadEnv(
+  const { VITE_APP_BASE_API, VITE_APP_BASE_API_REAL, VITE_PORT } = loadEnv(
     mode,
     process.cwd(),
     '',
   )
+
   return {
     // base: './',
     resolve: {
@@ -32,7 +33,7 @@ export default defineConfig(({ command, mode }) => {
       // 忽略文件后缀
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.vue'],
     },
-    plugins: composePlugins(command, VITE_LEGACY),
+    plugins: composePlugins(command),
     // https://cn.vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
     optimizeDeps: {
       // exclude: ['.pnpm'],
@@ -59,6 +60,8 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     server: {
+      // host : '0.0.0.0',
+      // port: VITE_PORT,
       https: false,
       open: false,
       // hmr: true,
@@ -71,14 +74,18 @@ export default defineConfig(({ command, mode }) => {
           rewrite: (path) => '/',
         },
       },*/
-      /* proxy: {
-        [VITE_APP_BASE_API]: {
-          target: VITE_APP_BASE_API_REAL,
-          ws: false,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(new RegExp(`^${VITE_APP_BASE_API}`, 'g'), ''),
-        },
-      },*/
+      proxy: {
+        ...(mode === 'production' && {
+          [VITE_APP_BASE_API]: {
+            target: VITE_APP_BASE_API_REAL,
+            // ws: false,
+            changeOrigin: true,
+            rewrite: (path) => {
+              return path.replace(new RegExp(`^${VITE_APP_BASE_API}`, 'g'), '')
+            },
+          },
+        }),
+      },
     },
     // 全局变量 window
     define: {
@@ -87,15 +94,12 @@ export default defineConfig(({ command, mode }) => {
       __VUE_I18N_FULL_INSTALL__: true,
       __VUE_I18N_LEGACY_API__: false,
       __INTLIFY_PROD_DEVTOOLS__: false,
-      __APP_INFO__: JSON.stringify({
-        version: '3.0.0',
-      }),
     },
     build: {
       path: './',
       sourcemap: false,
       brotliSize: false,
-      chunkSizeWarningLimit: 2500,
+      chunkSizeWarningLimit: 3500,
       emptyOutDir: true,
       // 启用/禁用 gzip 压缩大小报告
       reportCompressedSize: false,

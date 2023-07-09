@@ -1,10 +1,9 @@
 import path from 'node:path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import legacy from '@vitejs/plugin-legacy'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-// https://www.npmjs.com/package/vite-plugin-mock/v/2.9.8?activeTab=readme
+// https://www.npmjs.com/package/vite-plugin-mock/v/2.9.8?activeTab=code
 import { viteMockServe } from 'vite-plugin-mock'
 import eslintPlugin from 'vite-plugin-eslint'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -24,8 +23,7 @@ function toPascalCase(str) {
   )
   return capitalizedWords.join('')
 }
-export function composePlugins(command, VITE_LEGACY) {
-  const prodMock = true
+export function composePlugins(command) {
   const lifecycle = process.env.npm_lifecycle_event
   return [
     vue(),
@@ -117,39 +115,13 @@ export function composePlugins(command, VITE_LEGACY) {
         },
       ],*/
     }),
-    {
-      ...eslintPlugin({
-        failOnError: false,
-      }),
-    },
+    eslintPlugin({
+      failOnError: false,
+    }),
     /*eslintPlugin({
               include: ['src/!**!/!*.js', 'src/!**!/!*.vue', 'src/!*.js', 'src/!*.vue']
             }),*/
-    // https://www.npmjs.com/package/@vitejs/plugin-legacy
-    VITE_LEGACY === 'true' &&
-      legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-        // renderLegacyChunks: true,
-        // polyfills: [
-        //   'es.symbol',
-        //   'es.array.filter',
-        //   'es.promise',
-        //   'es.promise.finally',
-        //   'es/map',
-        //   'es/set',
-        //   'es.array.for-each',
-        //   'es.object.define-properties',
-        //   'es.object.define-property',
-        //   'es.object.get-own-property-descriptor',
-        //   'es.object.get-own-property-descriptors',
-        //   'es.object.keys',
-        //   'es.object.to-string',
-        //   'web.dom-collections.for-each',
-        //   'esnext.global-this',
-        //   'esnext.string.match-all'
-        // ]
-      }),
+
     // https://www.npmjs.com/package/rollup-plugin-visualizer
     visualizer({
       open: true,
@@ -162,7 +134,7 @@ export function composePlugins(command, VITE_LEGACY) {
       watchFiles: true,
       supportTs: false,
       localEnabled: command === 'serve',
-      prodEnabled: command !== 'serve' && prodMock,
+      prodEnabled: command !== 'serve',
       injectCode: `
           import { setupProdMockServer } from './mockProdServer';
           setupProdMockServer();
