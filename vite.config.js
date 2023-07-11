@@ -97,7 +97,6 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       sourcemap: false,
-      brotliSize: false,
       chunkSizeWarningLimit: 3500,
       emptyOutDir: true,
       // 启用/禁用 gzip 压缩大小报告
