@@ -96,7 +96,6 @@ export default defineConfig(({ command, mode }) => {
       __INTLIFY_PROD_DEVTOOLS__: false,
     },
     build: {
-      path: './',
       sourcemap: false,
       brotliSize: false,
       chunkSizeWarningLimit: 3500,
