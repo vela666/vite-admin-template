@@ -64,7 +64,6 @@
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.2",
-    "vite-plugin-chunk-split": "^0.4.7",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-mock": "2.9.8",
     "vite-plugin-style-import": "^2.0.0",

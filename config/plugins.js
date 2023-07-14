@@ -14,8 +14,6 @@ import {
   VxeTableResolve,
 } from 'vite-plugin-style-import'
 
-import { chunkSplitPlugin } from 'vite-plugin-chunk-split'
-
 function toPascalCase(str) {
   const words = str.split('-')
   const capitalizedWords = words.map(
@@ -95,7 +93,6 @@ export function composePlugins(command) {
         },*/
       ],
     }),
-    chunkSplitPlugin(),
     //  需安装 pnpm i  vite-plugin-style-import consola -D
     createStyleImportPlugin({
       resolves: [VxeTableResolve()],
