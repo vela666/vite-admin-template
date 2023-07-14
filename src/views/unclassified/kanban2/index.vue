@@ -1,265 +1,116 @@
 <template>
   <div>
-    <div class="layout-json">
-      Displayed as <code>[x, y, w, h]</code>:
-      <div class="columns">
-        <div v-for="item in layout" :key="item.i" class="layout-item">
-          <b>{{ item.i }}</b
-          >: [{{ item.x }}, {{ item.y }}, {{ item.w }}, {{ item.h }}]
+    <div>
+      <el-button @click="addNewKanBan">添加仪表</el-button>
+      <el-button @click="managementKanBan">管理仪表</el-button>
+      <el-button @click="save">应用</el-button>
+      <div class="layout-json">
+        Displayed as <code>[x, y, w, h]</code>:
+        <div class="columns">
+          <div v-for="item in layout" :key="item.i" class="layout-item">
+            <b>{{ item.i }}</b
+            >: [{{ item.x }}, {{ item.y }}, {{ item.w }}, {{ item.h }}]
+          </div>
         </div>
       </div>
     </div>
-    <br />
-    <div
-      class="droppable-element"
-      draggable="true"
-      unselectable="on"
-      @drag="drag"
-      @dragend="dragEnd">
-      Droppable Element (Drag me!)
-    </div>
-    <div ref="wrapper">
+    <div class="test" ref="wrapper">
       <GridLayout
-        ref="gridLayout"
+        ref="gridLayoutRef"
         v-model:layout="layout"
         isBounded
+        vertical-compact
         :margin="[20, 20]"
+        @layout-updated="layoutUpdatedEvent"
         :row-height="90">
-        <template #item="{ item }">
-          <span class="text">{{ item.i }}</span>
-        </template>
+        <GridItem
+          v-for="item of layout"
+          :key="item.i"
+          :x="item.x"
+          :col-num="12"
+          :y="item.y"
+          :static="false"
+          :w="item.w"
+          :h="item.h"
+          :min-h="item.minH"
+          :min-w="item.w"
+          :max-w="item.w"
+          :is-resizable="item.w >= 6"
+          @resize="gridItemReize"
+          drag-allow-from=".drag-handle"
+          drag-ignore-from=".no-drag"
+          :i="item.i">
+          <div class="drag-handle">拖我</div>
+          {{ item.i }}
+        </GridItem>
       </GridLayout>
     </div>
+    <LayoutManage :data="layout" ref="layoutManageRef" @save="kanBanSave" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-// you can import from 'lodash-es' or implement it by yourself
-import { throttle } from 'lodash-es'
+import { ref, onMounted, onBeforeUnmount, shallowRef } from 'vue'
 
-import { GridLayout } from 'grid-layout-plus'
+import { GridLayout, GridItem } from 'grid-layout-plus'
+import LayoutManage from './components/LayoutManage.vue'
+import { throttle } from 'lodash-es'
 
 const layout = ref(
   [
-    {
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 1,
-      i: '289',
-      id: 289,
-      type: 1,
-    },
-    {
-      x: 6,
-      y: 1,
-      w: 6,
-      h: 4,
-      i: '2083',
-      id: 2083,
-      type: 2,
-    },
-    {
-      x: 0,
-      y: 1,
-      w: 6,
-      h: 4,
-      i: '2088',
-      id: 2088,
-      type: 2,
-    },
-    {
-      x: 6,
-      y: 5,
-      w: 6,
-      h: 4,
-      i: '2092',
-      id: 2092,
-      type: 2,
-    },
-    {
-      x: 0,
-      y: 5,
-      w: 6,
-      h: 4,
-      i: '2099',
-      id: 2099,
-      type: 2,
-    },
-    {
-      x: 6,
-      y: 9,
-      w: 3,
-      h: 2,
-      i: '2100',
-      id: 2100,
-      type: 2,
-    },
-    {
-      x: 0,
-      y: 9,
-      w: 6,
-      h: 4,
-      i: '2101',
-      id: 2101,
-      type: 2,
-    },
+    { x: 0, y: 0, w: 12, h: 1, i: '208', id: 208, type: 1 },
+    { x: 6, y: 1, w: 6, h: 4, i: '1306', id: 1306, type: 2 },
+    { x: 0, y: 5, w: 12, h: 1, i: '207', id: 207, type: 1 },
+    { x: 0, y: 1, w: 3, h: 2, i: '2100', id: 2100, type: 2 },
   ].map((item) => ({
     ...item,
-    'min-h': item.h,
-    'min-w': item.w,
-    'max-w': item.w,
+    minH: item.h,
   })),
 )
 
-const wrapper = ref()
-const gridLayout = ref()
+const gridLayoutRef = ref()
+const layoutManageRef = shallowRef(null)
 
-onMounted(() => {
-  document.addEventListener('dragover', syncMousePosition)
-})
-
-onBeforeUnmount(() => {
-  document.removeEventListener('dragover', syncMousePosition)
-})
-
-const mouseAt = { x: -1, y: -1 }
-
-function syncMousePosition(event) {
-  mouseAt.x = event.clientX
-  mouseAt.y = event.clientY
+const addNewKanBan = () => {
+  const id = (+layout.value.at(-1)?.id || 0) + 1
+  const node = {
+    x: -1, // 初始位置 x
+    y: -1, // 初始位置 y
+    // autoPosition: true,
+    w: id % 2 ? 6 : 3,
+    // w: 6,
+    h: id % 2 ? 4 : 2,
+    // h: 4,
+    i: id + '',
+    id: id,
+    minH: id % 2 ? 4 : 2,
+  }
+  layout.value.push(node) // 将新网格项添加到数据数组中
+  // save()
 }
 
-const dropId = 'drop'
-const dragItem = { x: -1, y: -1, w: 2, h: 2, i: '' }
+const managementKanBan = () => {
+  layoutManageRef.value.open(layout.value)
+}
 
-const drag = throttle(() => {
-  const parentRect = wrapper.value?.getBoundingClientRect()
+const save = () => {
+  console.log(layout.value)
+}
 
-  if (!parentRect || !gridLayout.value) return
+const kanBanSave = (data) => {
+  layout.value = data
+}
 
-  const mouseInGrid =
-    mouseAt.x > parentRect.left &&
-    mouseAt.x < parentRect.right &&
-    mouseAt.y > parentRect.top &&
-    mouseAt.y < parentRect.bottom
-
-  if (mouseInGrid && !layout.value.find((item) => item.i === dropId)) {
-    layout.value.push({
-      x: (layout.value.length * 2) % 12,
-      y: layout.value.length + 12, // puts it at the bottom
-      w: 2,
-      h: 2,
-      i: dropId,
+const layoutUpdatedEvent = (newLayout) => {
+  console.log(newLayout, 'layoutUpdatedEvent')
+}
+const gridItemReize = (i, newH, newW, newHPx, newWPx) => {
+  requestAnimationFrame(() => {
+    document.documentElement.scrollTo({
+      top: newHPx,
+      behavior: 'smooth',
     })
-  }
-
-  const index = layout.value.findIndex((item) => item.i === dropId)
-
-  if (index !== -1) {
-    const item = gridLayout.value.getItem(dropId)
-
-    if (!item) return
-
-    try {
-      item.wrapper.style.display = 'none'
-    } catch (e) {
-      console.log(e)
-    }
-
-    Object.assign(item.state, {
-      top: mouseAt.y - parentRect.top,
-      left: mouseAt.x - parentRect.left,
-    })
-    const newPos = item.calcXY(
-      mouseAt.y - parentRect.top,
-      mouseAt.x - parentRect.left,
-    )
-
-    if (mouseInGrid) {
-      gridLayout.value.dragEvent(
-        'dragstart',
-        dropId,
-        newPos.x,
-        newPos.y,
-        dragItem.h,
-        dragItem.w,
-      )
-      dragItem.i = String(index)
-      dragItem.x = layout.value[index].x
-      dragItem.y = layout.value[index].y
-    } else {
-      gridLayout.value.dragEvent(
-        'dragend',
-        dropId,
-        newPos.x,
-        newPos.y,
-        dragItem.h,
-        dragItem.w,
-      )
-      layout.value = layout.value.filter((item) => item.i !== dropId)
-    }
-  }
-})
-
-function dragEnd() {
-  const parentRect = wrapper.value?.getBoundingClientRect()
-
-  if (!parentRect || !gridLayout.value) return
-
-  const mouseInGrid =
-    mouseAt.x > parentRect.left &&
-    mouseAt.x < parentRect.right &&
-    mouseAt.y > parentRect.top &&
-    mouseAt.y < parentRect.bottom
-
-  if (mouseInGrid) {
-    alert(
-      `Dropped element props:\n${JSON.stringify(
-        dragItem,
-        ['x', 'y', 'w', 'h'],
-        2,
-      )}`,
-    )
-    gridLayout.value.dragEvent(
-      'dragend',
-      dropId,
-      dragItem.x,
-      dragItem.y,
-      dragItem.h,
-      dragItem.w,
-    )
-    layout.value = layout.value.filter((item) => item.i !== dropId)
-  } else {
-    return
-  }
-
-  layout.value.push({
-    x: dragItem.x,
-    y: dragItem.y,
-    w: dragItem.w,
-    h: dragItem.h,
-    i: dragItem.i,
   })
-  gridLayout.value.dragEvent(
-    'dragend',
-    dragItem.i,
-    dragItem.x,
-    dragItem.y,
-    dragItem.h,
-    dragItem.w,
-  )
-
-  const item = gridLayout.value.getItem(dropId)
-
-  if (!item) return
-
-  try {
-    item.wrapper.style.display = ''
-  } catch (e) {
-    console.log(e)
-  }
 }
 </script>
 

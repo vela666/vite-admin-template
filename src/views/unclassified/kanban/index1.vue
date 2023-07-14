@@ -25,21 +25,44 @@ import 'gridstack/dist/gridstack.min.css'
 import { GridStack } from 'gridstack'
 import GridLayout from './components/GridLayout.vue'
 import LayoutManage from './components/LayoutManage.vue'
+import { differenceBy } from 'lodash-es'
 
 const layoutManageRef = shallowRef(null)
 // const items = ref([])
-const items = ref(
-  [
-    { x: 0, y: 0, w: 12, h: 1, id: '290' },
-    { x: 6, y: 1, w: 6, h: 4, id: '2130' },
-    { x: 0, y: 1, w: 6, h: 4, id: '2129' },
-  ].map((item) => {
-    return {
-      ...item,
-      minH: item.h,
-    }
-  }),
-)
+const items = ref([
+  {
+    id: '1',
+    w: 6,
+    h: 4,
+    x: 0,
+    y: 0,
+    mark: 'grid-item-1',
+  },
+  {
+    id: '2',
+    w: 3,
+    h: 2,
+    x: 9,
+    y: 0,
+    mark: 'grid-item-2',
+  },
+  {
+    id: '3',
+    w: 6,
+    h: 4,
+    x: 6,
+    y: 2,
+    mark: 'grid-item-3',
+  },
+  {
+    id: '4',
+    w: 12,
+    h: 2,
+    x: 0,
+    y: 4,
+    mark: 'grid-item-4',
+  },
+])
 /*const items = ref(
   [
     { x: 0, y: 0, w: 12, h: 4, i: '1689', id: 1689, type: 2 },
@@ -74,10 +97,11 @@ const addNewKanBan = () => {
     h: id % 2 ? 4 : 2,
     // h: 4,
     id: id + '',
-    minH: id % 2 ? 4 : 2,
+    mark: `grid-item-${id}`,
   }
+  console.log(node)
   items.value.push(node) // 将新网格项添加到数据数组中
-  gridLayoutRef.value.makeLayout(node)
+  gridLayoutRef.value.makeLayout(node.mark)
 }
 
 const managementKanBan = () => {
@@ -85,11 +109,20 @@ const managementKanBan = () => {
 }
 
 const kanBanSave = (data) => {
+  // 查找 差集 其中一边不存在的数据
+  const differenceVals = differenceBy(data, items.value, 'id')
   items.value = data
-  gridLayoutRef.value.reloadLayout(data)
+  differenceVals.forEach((item) => {
+    gridLayoutRef.value.makeLayout(item.mark)
+  })
+  gridLayoutRef.value.reloadLayout()
 }
 
-const save = () => {}
+const save = () => {
+  nextTick(() => {
+    console.log(gridLayoutRef.value.getSaveLayout())
+  })
+}
 
 onMounted(() => {
   gridLayoutRef.value.initLayout()
