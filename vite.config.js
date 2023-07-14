@@ -35,7 +35,7 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: composePlugins(command),
     // https://cn.vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
-    optimizeDeps: {
+    /* optimizeDeps: {
       // exclude: ['.pnpm'],
       include: [
         '@vueuse/core',
@@ -46,7 +46,7 @@ export default defineConfig(({ command, mode }) => {
         'element-plus',
         // 'vuedraggable',
       ],
-    },
+    },*/
     css: {
       preprocessorOptions: {
         scss: {
