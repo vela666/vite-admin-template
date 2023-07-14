@@ -4,6 +4,8 @@
     append-to-body
     destroy-on-close
     direction="rtl"
+    :close-on-click-modal="closeOnClickModal"
+    :close-on-press-escape="closeOnPressEscape"
     class="n-drawer-tab"
     @close="$emit('close')"
     :title="title"
@@ -33,9 +35,13 @@
 </template>
 
 <script setup>
-import { shallowRef } from 'vue'
+import { computed } from 'vue'
 import { debounce } from 'lodash-es'
 const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
   tabs: {
     type: Array,
     default: () => [],
@@ -48,6 +54,16 @@ const props = defineProps({
     type: String,
     default: '900px',
   },
+  // 是否可以通过点击 modal 关闭 Drawer
+  closeOnClickModal: {
+    type: Boolean,
+    default: true,
+  },
+  // 是否可以通过按下 ESC 关闭 Drawer
+  closeOnPressEscape: {
+    type: Boolean,
+    default: true,
+  },
   loading: {
     type: Boolean,
     default: false,
@@ -57,21 +73,21 @@ const props = defineProps({
     default: '',
   },
 })
-const emit = defineEmits(['close', 'updTabs'])
-const visible = shallowRef(false)
+const emit = defineEmits(['update:modelValue', 'close', 'updTabs'])
+const visible = computed({
+  get() {
+    return props.modelValue
+  },
+  set(val) {
+    emit('update:modelValue', val)
+  },
+})
 
 // 切换tab
 const tabsClick = debounce((val) => {
   if (val.name === props.componentName) return
   emit('updTabs', val)
 }, 300)
-
-const open = () => {
-  visible.value = true
-}
-defineExpose({
-  open,
-})
 
 defineOptions({
   name: 'DrawerTab',
